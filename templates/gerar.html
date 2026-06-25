@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Gerar QR Code</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  body { background-color: #f0f0f0; font-size: 16px; }
+  .topo {
+    background-color: #fff;
+    text-align: center;
+    padding: 16px 16px 14px;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 20px;
+  }
+  .topo h1 { font-size: 18px; font-weight: 700; margin: 6px 0 0; }
+  .qr-box { text-align: center; padding: 20px; }
+  .qr-box img { width: 220px; height: 220px; }
+  .rodape { text-align: center; color: #bbb; font-size: 11px; padding: 20px; letter-spacing: 1px; }
+
+  @media print {
+    body * { visibility: hidden; }
+    #area-impressao, #area-impressao * { visibility: visible; }
+    #area-impressao {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    #area-impressao img { width: 300px; height: 300px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topo">
+  <h1>Gerar QR Code</h1>
+</div>
+
+<div class="px-3">
+  <div class="card shadow-sm mb-3">
+    <div class="card-header fw-bold">Dados do Funcionário</div>
+    <div class="card-body">
+      <form method="POST" action="/gerar">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Coligada</label>
+          <input type="number" name="coligada" class="form-control form-control-lg"
+                 placeholder="Ex: 1" value="{{ coligada or '' }}" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Chapa</label>
+          <input type="text" name="chapa" class="form-control form-control-lg"
+                 placeholder="Ex: 030422" value="{{ chapa or '' }}" required>
+        </div>
+        <button type="submit" class="btn btn-dark w-100 btn-lg">Gerar QR Code</button>
+      </form>
+    </div>
+  </div>
+
+  {% if erro %}
+  <div class="alert alert-danger mx-0 mb-3" role="alert">
+    ⚠️ {{ erro }}
+  </div>
+  {% endif %}
+
+  {% if qr_base64 %}
+  <div class="card shadow-sm mb-3">
+    <div class="card-header fw-bold">QR Code Gerado</div>
+    <div class="qr-box" id="area-impressao">
+      <img src="data:image/png;base64,{{ qr_base64 }}" alt="QR Code">
+      <p style="font-size:13px;margin-top:8px;font-weight:600;">Coligada: {{ coligada }} | Chapa: {{ chapa }}</p>
+    </div>
+    <div class="px-3 pb-3 d-grid gap-2">
+      <a href="{{ url_funcionario }}" target="_blank" class="btn btn-success btn-lg">
+        Abrir Página do Funcionário
+      </a>
+      <button onclick="window.print()" class="btn btn-outline-dark btn-lg">
+        Baixar / Imprimir PDF
+      </button>
+    </div>
+    <p class="text-muted text-center pb-2" style="font-size:11px;word-break:break-all;">{{ url_funcionario }}</p>
+  </div>
+  {% endif %}
+
+</div>
+
+<div class="rodape">QR CODE OBRA</div>
+
+</body>
+</html>

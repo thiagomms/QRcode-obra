@@ -1,0 +1,5 @@
+flask
+pyodbc
+pandas
+python-dotenv
+qrcode[pil]

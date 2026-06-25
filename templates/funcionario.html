@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>QR Code Obra</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  body {
+    background-color: #f0f0f0;
+    font-size: 16px;
+  }
+
+  .topo {
+    background-color: #fff;
+    text-align: center;
+    padding: 16px 16px 14px;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 12px;
+  }
+
+  .topo small {
+    display: block;
+    color: #888;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .topo h1 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 2px 0 0;
+  }
+
+  .perfil {
+    text-align: center;
+    padding: 16px;
+  }
+
+  .perfil .emoji {
+    font-size: 64px;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .perfil .nome {
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .badge-status {
+    display: inline-block;
+    background-color: #198754;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 24px;
+    border-radius: 50px;
+    letter-spacing: 1px;
+  }
+
+  .campo {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 11px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 12px;
+  }
+
+  .campo:last-child {
+    border-bottom: none;
+  }
+
+  .campo-label {
+    font-size: 14px;
+    color: #666;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .campo-valor {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1a1a1a;
+    text-align: right;
+    word-break: break-word;
+  }
+
+  .tag {
+    display: inline-block;
+    background: #e9ecef;
+    color: #555;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 50px;
+    margin: 4px 4px 0 0;
+  }
+
+  .rodape {
+    text-align: center;
+    color: #bbb;
+    font-size: 11px;
+    padding: 20px;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<div class="topo">
+  <small>Segurança do Trabalho</small>
+  <h1>QR Code Obra</h1>
+</div>
+
+<div class="px-3">
+
+  <div class="card shadow-sm mb-3">
+    <div class="card-body perfil">
+      <p class="text-muted mb-3" style="font-size:13px;letter-spacing:1px;text-transform:uppercase;">Consulta de Funcionários</p>
+      <img src="/foto/{{ coligada }}/{{ funcionario.CHAPA }}"
+           onerror="this.style.display='none';document.getElementById('emoji-fallback').style.display='block';"
+           style="width:120px;height:120px;object-fit:cover;object-position:top;border-radius:50%;margin-bottom:10px;">
+      <div id="emoji-fallback" class="emoji" style="display:none">👷</div>
+      <div class="nome">{{ funcionario.NOME }}</div>
+      <span class="badge-status">✔ Apto para Trabalho</span>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-3">
+    <div class="card-header fw-bold">Dados Pessoais</div>
+    <div class="card-body p-0">
+      <div class="campo">
+        <span class="campo-label">Chapa</span>
+        <span class="campo-valor">{{ funcionario.CHAPA }}</span>
+      </div>
+      <div class="campo">
+        <span class="campo-label">CPF</span>
+        <span class="campo-valor">{{ funcionario.CPF }}</span>
+      </div>
+      <div class="campo">
+        <span class="campo-label">Função</span>
+        <span class="campo-valor">{{ funcionario.CODFUNCAO }}</span>
+      </div>
+      <div class="campo">
+        <span class="campo-label">Seção</span>
+        <span class="campo-valor">{{ funcionario.CODSECAO }}</span>
+      </div>
+      <div class="campo">
+        <span class="campo-label">Admissão</span>
+        <span class="campo-valor">{{ funcionario.DATAADMISSAO }}</span>
+      </div>
+      <div class="campo">
+        <span class="campo-label">Escolaridade</span>
+        <span class="campo-valor">{{ funcionario.GRAUINSTRUCAO }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-3">
+    <div class="card-header fw-bold">Contato</div>
+    <div class="card-body p-0">
+      <div class="campo">
+        <span class="campo-label">Telefone</span>
+        <span class="campo-valor">{{ funcionario.TELEFONE1 or '—' }}</span>
+      </div>
+      <div class="campo">
+        <span class="campo-label">Celular</span>
+        <span class="campo-valor">{{ funcionario.TELEFONE2 or '—' }}</span>
+      </div>
+      <div class="campo">
+        <span class="campo-label">E-mail</span>
+        <span class="campo-valor">{{ funcionario.EMAIL or '—' }}</span>
+      </div>
+      <div class="campo">
+        <span class="campo-label">Endereço</span>
+        <span class="campo-valor">{{ funcionario.RUA or '—' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-3">
+    <div class="card-header fw-bold">Treinamentos</div>
+    <div class="card-body">
+      <span class="tag">NR18 ⏳</span>
+      <span class="tag">NR35 ⏳</span>
+      <span class="tag">Integração ⏳</span>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-3">
+    <div class="card-header fw-bold">ASO</div>
+    <div class="card-body p-0">
+      <div class="campo">
+        <span class="campo-label">Situação</span>
+        <span class="campo-valor">Aguardando integração</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="px-3 mb-3">
+  <a href="/gerar" class="btn btn-dark w-100 btn-lg">Gerar QR Code</a>
+</div>
+
+<div class="rodape">QR CODE OBRA</div>
+
+</body>
+</html>
